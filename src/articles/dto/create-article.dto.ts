@@ -2,5 +2,6 @@ export class CreateArticleDto {
     readonly title: string;
     readonly date: Date;
     readonly text: string;
-    readonly userId: string;
+    readonly user: string;
+    readonly comments: [string];
 }
