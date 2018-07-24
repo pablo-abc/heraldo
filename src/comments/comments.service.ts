@@ -8,8 +8,10 @@ import { Comment } from './interfaces/comment.interface';
 export class CommentsService {
     constructor(@InjectModel('Comment') private readonly commentModel: Model<Comment>) { }
 
-    async create(createCommentDto: CreateCommentDto): Promise<Comment> {
-        const createdComment = new this.commentModel(createCommentDto);
+    async create(createCommentDto: CreateCommentDto, article?: string): Promise<Comment> {
+        const createdComment = article ?
+            new this.commentModel(createCommentDto.setArticle(article)) :
+            new this.commentModel(createCommentDto);
         return await createdComment.save();
     }
 

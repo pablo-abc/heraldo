@@ -29,13 +29,13 @@ export class ArticlesController {
     }
 
     @Post(':id/comments')
-    addComment(@Body() createCommentDto: CreateCommentDto): Promise<Comment> {
-        return this.commentsService.create(createCommentDto);
+    addComment(@Body() createCommentDto: CreateCommentDto, @Param('id') id: string): Promise<Comment> {
+        return this.commentsService.create(createCommentDto, id);
     }
 
     @Delete(':id')
     @HttpCode(204)
-    deleteById(@Param('id') id) {
+    deleteById(@Param('id') id: string) {
         this.articlesService.deleteById(id);
     }
 }
