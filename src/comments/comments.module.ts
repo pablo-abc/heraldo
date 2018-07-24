@@ -8,5 +8,6 @@ import { CommentSchema } from './schemas/comment.schema';
     imports: [MongooseModule.forFeature([{ name: 'Comment', schema: CommentSchema }])],
     controllers: [CommentsController],
     providers: [CommentsService],
+    exports: [CommentsService],
 })
 export class CommentsModule { }
