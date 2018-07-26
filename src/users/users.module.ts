@@ -7,6 +7,7 @@ import { RolesModule } from '../roles/roles.module';
 import { RoleMappingsModule } from '../role-mappings/role-mappings.module';
 import { RoleMappingSchema } from 'role-mappings/schemas/role-mapping.schema';
 import { RoleSchema } from 'roles/schemas/role.schema';
+import { AccessTokenSchema } from './schemas/user-access-token.schema';
 
 @Module({
     imports: [
@@ -14,6 +15,7 @@ import { RoleSchema } from 'roles/schemas/role.schema';
             { name: 'User', schema: UserSchema },
             { name: 'RoleMapping', schema: RoleMappingSchema },
             { name: 'Role', schema: RoleSchema },
+            { name: 'AccessToken', schema: AccessTokenSchema },
         ]),
         RolesModule,
         RoleMappingsModule,
