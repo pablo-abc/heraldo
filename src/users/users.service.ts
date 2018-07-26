@@ -16,7 +16,7 @@ export class UsersService {
         return createdUser.save();
     }
 
-    async login(loginUserDto: LoginUserDto): Promise<string> {
+    async login(loginUserDto: LoginUserDto, roles?: string[]): Promise<string> {
         const user: User = await this.userModel.findOne({
             $or: [
                 { username: loginUserDto.username },
