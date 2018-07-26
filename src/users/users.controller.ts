@@ -1,4 +1,4 @@
-import { Controller, Post, UsePipes, Body } from '@nestjs/common';
+import { Controller, Post, UsePipes, Body, HttpCode } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { HashPasswordPipe } from '../pipes/hash-password.pipe';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -19,6 +19,7 @@ export class UsersController {
     }
 
     @Post('login')
+    @HttpCode(200)
     login(@Body() createUserDto: CreateUserDto): Promise<string> {
         return this.usersService.login(createUserDto);
     }
