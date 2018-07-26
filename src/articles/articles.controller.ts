@@ -15,8 +15,6 @@ export class ArticlesController {
         private readonly commentsService: CommentsService,
     ) { }
 
-    @Roles('admin', 'writer')
-    @UseGuards(RolesGuard)
     @Get()
     findAll(): Promise<Article[]> {
         return this.articlesService.findAll();
@@ -27,6 +25,8 @@ export class ArticlesController {
         return this.articlesService.findById(id);
     }
 
+    @Roles('admin', 'user')
+    @UseGuards(RolesGuard)
     @Post()
     create(@Body() createArticleDto: CreateArticleDto): Promise<Article> {
         return this.articlesService.create(createArticleDto);
@@ -37,6 +37,8 @@ export class ArticlesController {
         return this.commentsService.create(createCommentDto, id);
     }
 
+    @Roles('admin')
+    @UseGuards(RolesGuard)
     @Delete(':id')
     @HttpCode(204)
     deleteById(@Param('id') id: string) {
