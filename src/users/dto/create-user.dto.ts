@@ -21,12 +21,4 @@ export class CreateUserDto {
         this.password = password;
         this.email = email;
     }
-
-    storePassword(createUserDto: CreateUserDto, password: string): CreateUserDto {
-        return new CreateUserDto(
-            createUserDto.username,
-            password,
-            createUserDto.email,
-        );
-    }
 }
