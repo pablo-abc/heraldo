@@ -8,7 +8,10 @@ import { RoleMappingsController } from './role-mappings.controller';
 @Module({
     imports: [RolesModule, MongooseModule.forFeature([{ name: 'RoleMapping', schema: RoleMappingSchema }])],
     providers: [RoleMappingsService],
-    exports: [RoleMappingsService],
+    exports: [
+        RoleMappingsService,
+        MongooseModule.forFeature([{ name: 'RoleMapping', schema: RoleMappingSchema }]),
+    ],
     controllers: [RoleMappingsController],
 })
 export class RoleMappingsModule { }
