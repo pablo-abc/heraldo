@@ -4,7 +4,7 @@ import { Model } from 'mongoose';
 import { User } from './interfaces/user.interface';
 import { RoleMapping } from '../role-mappings/interfaces/role-mapping.interface';
 import { Role } from '../roles/interfaces/role.interface';
-import { AccessToken } from './interfaces/user-access-token.interface';
+import { AccessToken } from '../auth/interfaces/user-access-token.interface';
 import { CreateUserDto } from './dto/create-user.dto';
 import { CreateRoleMappingDto } from '../role-mappings/dto/create-role-mapping.dto';
 import { LoginUserDto } from './dto/login-user.dto';
