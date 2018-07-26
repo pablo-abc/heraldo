@@ -15,8 +15,7 @@ export class UsersController {
     }
 
     @Post('login')
-    @UsePipes(new HashPasswordPipe())
-    login(@Body() createUserDto: CreateUserDto): Promise<string> | string {
-        return 'asd';
+    login(@Body() createUserDto: CreateUserDto): Promise<string> {
+        return this.usersService.login(createUserDto);
     }
 }

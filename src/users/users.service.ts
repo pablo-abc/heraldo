@@ -5,6 +5,7 @@ import { User } from './interfaces/user.interface';
 import { CreateUserDto } from './dto/create-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import * as jwt from 'jsonwebtoken';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -23,10 +24,10 @@ export class UsersService {
             ],
         }).exec();
         if (!user) throw new BadRequestException();
-        if (loginUserDto.password !== user.password)
+        if (!await bcrypt.compare(loginUserDto.password, user.password))
             throw new BadRequestException();
         return jwt.sign({
             _id: user._id,
-        }, process.env.SECRET);
+        }, process.env.SECRET, { expiresIn: '1w' });
     }
 }
