@@ -5,8 +5,12 @@ import { User } from '../users/interfaces/user.interface';
 
 @Injectable()
 export class HashPasswordPipe implements PipeTransform<CreateUserDto, Promise<User>> {
-    async transform(user: CreateUserDto, metadata: ArgumentMetadata): Promise<User> {
-        const hashedPassword = await bcrypt.hash(user.password, 24);
-        return user.storePassword(user, hashedPassword);
+    async transform(user: User, metadata: ArgumentMetadata): Promise<User> {
+        const hashedPassword = await bcrypt.hash(user.password, 12);
+        return new CreateUserDto(
+            user.username,
+            hashedPassword,
+            user.email,
+        );
     }
 }
