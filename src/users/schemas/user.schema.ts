@@ -5,6 +5,7 @@ export const UserSchema = new Schema({
     username: {
         type: String,
         required: true,
+        unique: true,
     },
     password: {
         type: String,
@@ -13,6 +14,7 @@ export const UserSchema = new Schema({
     email: {
         type: String,
         required: true,
+        unique: true,
     },
     created: {
         type: Date,
