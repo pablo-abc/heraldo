@@ -3,10 +3,14 @@ import { UsersService } from './users.service';
 import { HashPasswordPipe } from '../pipes/hash-password.pipe';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './interfaces/user.interface';
+import { RoleMappingsService } from '../role-mappings/role-mappings.service';
 
 @Controller('users')
 export class UsersController {
-    constructor(private readonly usersService: UsersService) { }
+    constructor(
+        private readonly usersService: UsersService,
+        private readonly roleMappingsService: RoleMappingsService,
+    ) { }
 
     @Post()
     @UsePipes(new HashPasswordPipe())
