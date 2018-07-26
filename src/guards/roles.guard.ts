@@ -18,10 +18,10 @@ export class RolesGuard implements CanActivate {
         const token = request.headers.authorization;
         try {
             const user = jwt.verify(token, process.env.SECRET);
+            return roles.some(role => user.roles.includes(role));
         }
         catch (err) {
             return false;
         }
-        return true;
     }
 }
