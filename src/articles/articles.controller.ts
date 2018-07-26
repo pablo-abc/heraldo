@@ -1,10 +1,12 @@
-import { Controller, Get, Post, Delete, Body, Param, HttpCode } from '@nestjs/common';
+import { Controller, Get, Post, Delete, Body, Param, HttpCode, UseGuards } from '@nestjs/common';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { ArticlesService } from './articles.service';
 import { Article } from './interfaces/article.interface';
 import { CommentsService } from '../comments/comments.service';
 import { CreateCommentDto } from '../comments/dto/create-comment.dto';
 import { Comment } from '../comments/interfaces/comment.interface';
+import { Roles } from '../decorators/roles.decorator';
+import { RolesGuard } from '../guards/roles.guard';
 
 @Controller('articles')
 export class ArticlesController {
@@ -13,6 +15,8 @@ export class ArticlesController {
         private readonly commentsService: CommentsService,
     ) { }
 
+    @Roles('admin', 'writer')
+    @UseGuards(RolesGuard)
     @Get()
     findAll(): Promise<Article[]> {
         return this.articlesService.findAll();
