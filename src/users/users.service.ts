@@ -63,6 +63,6 @@ export class UsersService {
             _id: user._id,
             jwtid: accessToken.jwtid,
             roles: parsedRoles,
-        }, process.env.SECRET, { expiresIn: process.env.TOKEN_EXP });
+        }, process.env.SECRET, { expiresIn: '1h' });
     }
 }
