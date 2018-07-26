@@ -19,7 +19,7 @@ export class ArticlesController {
     }
 
     @Get(':id')
-    findById(@Param('id') id): Promise<Article> {
+    findById(@Param('id') id: string): Promise<Article> {
         return this.articlesService.findById(id);
     }
 
