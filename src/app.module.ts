@@ -6,11 +6,12 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UsersModule } from './users/users.module';
 import { RolesModule } from './roles/roles.module';
 import { RoleMappingsModule } from './role-mappings/role-mappings.module';
+import { AuthModule } from './auth/auth.module';
 const { DB_NAME: dbname, DB_USER: dbuser, DB_HOST: dbhost, DB_PORT: dbport } = process.env;
 const dburi = `mongodb://${dbhost}:${dbport}/${dbname}`;
 
 @Module({
-    imports: [ArticlesModule, MongooseModule.forRoot(dburi), UsersModule, RolesModule, RoleMappingsModule],
+    imports: [ArticlesModule, MongooseModule.forRoot(dburi), UsersModule, RolesModule, RoleMappingsModule, AuthModule],
     controllers: [AppController],
     providers: [AppService],
 })
