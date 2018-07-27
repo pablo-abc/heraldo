@@ -31,14 +31,19 @@ export class UsersService {
     });
     if (foundUser) throw new ConflictException('Email or username already in use');
     const createdUser = new this.userModel(createUserDto);
-    const role = await this.roleModel.findOne({ name: createUserDto.role || 'user' });
-    const userRole = role.name !== 'user' ? await this.roleModel.findOne({ name: 'user' }) : role;
-    if (!role || !userRole) throw new NotFoundException('Role does not exist');
+    const roleQuery = createUserDto.roles.indexOf('user') > -1 ?
+      createUserDto.roles.map(name => ({ name })) :
+      createUserDto.roles.map(name => ({ name })).concat({ name: 'user' });
+    const roles = await this.roleModel.find({ $or: roleQuery }).exec();
+    if (roles.length < roleQuery.length) throw new NotFoundException('Role does not exist');
     const user = await createdUser.save();
-    const createRoleMappingDto = new CreateRoleMappingDto(user._id, role._id);
-    const createdRoleMapping = new this.roleMappingModel(createRoleMappingDto);
-    const roleMapping = await createdRoleMapping.save();
+    await roles.map(async role => {
+      const createRoleMappingDto = new CreateRoleMappingDto(user._id, role._id);
+      const createdRoleMapping = new this.roleMappingModel(createRoleMappingDto);
+      return await createdRoleMapping.save();
+    });
     const { password, ...rest } = user.toJSON();
+    rest.roles = roles;
     return rest;
   }
 
