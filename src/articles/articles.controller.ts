@@ -28,8 +28,8 @@ export class ArticlesController {
   @Roles('user')
   @UseGuards(RolesGuard)
   @Post()
-  create(@Body() createArticleDto: CreateArticleDto): Promise<Article> {
-    return this.articlesService.create(createArticleDto);
+  create(@Body() createArticleDto: CreateArticleDto, @Req() req): Promise<Article> {
+    return this.articlesService.create(createArticleDto, req);
   }
 
   @Roles('user')
