@@ -32,6 +32,8 @@ export class ArticlesController {
     return this.articlesService.create(createArticleDto);
   }
 
+  @Roles('user')
+  @UseGuards(RolesGuard)
   @Post(':id/comments')
   addComment(@Body() createCommentDto: CreateCommentDto, @Param('id') id: string): Promise<Comment> {
     return this.commentsService.create(createCommentDto, id);

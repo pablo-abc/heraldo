@@ -1,19 +1,23 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body, UseGuards } from '@nestjs/common';
 import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { Comment } from './interfaces/comment.interface';
+import { Roles } from 'decorators/roles.decorator';
+import { RolesGuard } from 'guards/roles.guard';
 
 @Controller('comments')
 export class CommentsController {
-    constructor(private readonly commentsService: CommentsService) { }
+  constructor(private readonly commentsService: CommentsService) { }
 
-    @Get()
-    findAll() {
-        return this.commentsService.findAll();
-    }
+  @Get()
+  findAll() {
+    return this.commentsService.findAll();
+  }
 
-    @Post()
-    create(@Body() createCommentDto: CreateCommentDto): Promise<Comment> {
-        return this.commentsService.create(createCommentDto);
-    }
+  @Roles('user')
+  @UseGuards(RolesGuard)
+  @Post()
+  create(@Body() createCommentDto: CreateCommentDto): Promise<Comment> {
+    return this.commentsService.create(createCommentDto);
+  }
 }
