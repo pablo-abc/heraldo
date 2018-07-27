@@ -11,6 +11,7 @@ import { LoginUserDto } from './dto/login-user.dto';
 import * as jwt from 'jsonwebtoken';
 import * as bcrypt from 'bcrypt';
 import * as uuidv4 from 'uuid/v4';
+import { ResponseToken } from 'auth/interfaces/response-token.interface';
 
 @Injectable()
 export class UsersService {
@@ -42,7 +43,7 @@ export class UsersService {
             return rest;
     }
 
-    async login(loginUserDto: LoginUserDto, roles?: string[]): Promise<string> {
+    async login(loginUserDto: LoginUserDto, roles?: string[]): Promise<ResponseToken> {
         const user: User = await this.userModel.findOne({
             $or: [
                 { username: loginUserDto.username },
@@ -61,10 +62,16 @@ export class UsersService {
             jwtid: uuidv4(),
         });
         const accessToken = await createdAccessToken.save();
-        return jwt.sign({
+        const token = jwt.sign({
             _id: user._id,
             jwtid: accessToken.jwtid,
             roles: parsedRoles,
-        }, process.env.SECRET, { expiresIn: '1h' });
+        }, process.env.SECRET, { expiresIn: 3600 });
+        const responseToken = {
+            access_token: token,
+            expires_in: 3600,
+            token_type: 'Bearer',
+        };
+        return responseToken;
     }
 }
