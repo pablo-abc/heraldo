@@ -11,15 +11,15 @@ import { AccessTokenSchema } from '../auth/schemas/user-access-token.schema';
 import { AuthModule } from 'auth/auth.module';
 
 @Module({
-    imports: [
-        MongooseModule.forFeature([
-            { name: 'User', schema: UserSchema },
-        ]),
-        RolesModule,
-        RoleMappingsModule,
-        AuthModule,
-    ],
-    controllers: [UsersController],
-    providers: [UsersService],
+  imports: [
+    MongooseModule.forFeature([
+      { name: 'User', schema: UserSchema },
+    ]),
+    RolesModule,
+    RoleMappingsModule,
+    AuthModule,
+  ],
+  controllers: [UsersController],
+  providers: [UsersService],
 })
 export class UsersModule { }

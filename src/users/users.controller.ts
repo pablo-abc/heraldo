@@ -14,32 +14,32 @@ const validator = new Validator();
 
 @Controller('users')
 export class UsersController {
-    constructor(
-        private readonly usersService: UsersService,
-        private readonly roleMappingsService: RoleMappingsService,
-        private readonly authService: AuthService,
-    ) { }
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly roleMappingsService: RoleMappingsService,
+    private readonly authService: AuthService,
+  ) { }
 
-    @Post()
-    @UsePipes(new HashPasswordPipe(), new ValidationPipe({ transform: true }))
-    create(@Body() createUserDto: CreateUserDto, @Req() req): Promise<User> {
-        if (!this.authService.validateCreateUser(req, createUserDto))
-            throw new ForbiddenException('You can not assign a role to a user');
-        else
-            return this.usersService.create(createUserDto);
-    }
+  @Post()
+  @UsePipes(new HashPasswordPipe(), new ValidationPipe({ transform: true }))
+  create(@Body() createUserDto: CreateUserDto, @Req() req): Promise<User> {
+    if (!this.authService.validateCreateUser(req, createUserDto))
+      throw new ForbiddenException('You can not assign a role to a user');
+    else
+      return this.usersService.create(createUserDto);
+  }
 
-    @Post('login')
-    @HttpCode(200)
-    login(@Body() createUserDto: CreateUserDto): Promise<string> {
-        return this.usersService.login(createUserDto);
-    }
+  @Post('login')
+  @HttpCode(200)
+  login(@Body() createUserDto: CreateUserDto): Promise<string> {
+    return this.usersService.login(createUserDto);
+  }
 
-    @Post(':userId/roles/:roleId')
-    @Roles('admin')
-    @UseGuards(RolesGuard)
-    @UsePipes(new ValidationPipe({ transform: true }))
-    assignRole(@Param() createRoleMappingDto: CreateRoleMappingDto): Promise<RoleMapping> {
-        return this.roleMappingsService.create(createRoleMappingDto);
-    }
+  @Post(':userId/roles/:roleId')
+  @Roles('admin')
+  @UseGuards(RolesGuard)
+  @UsePipes(new ValidationPipe({ transform: true }))
+  assignRole(@Param() createRoleMappingDto: CreateRoleMappingDto): Promise<RoleMapping> {
+    return this.roleMappingsService.create(createRoleMappingDto);
+  }
 }
