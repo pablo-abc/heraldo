@@ -31,13 +31,15 @@ export class UsersService {
         if (foundUser) throw new ConflictException('Email or username already in use');
         const createdUser = new this.userModel(createUserDto);
         const role = await this.roleModel.findOne({ name: createUserDto.role || 'user' });
-        if (!role) throw new NotFoundException('Role does not exist');
+        const userRole = role.name !== 'user' ? await this.roleModel.findOne({ name: 'user' }) : role;
+        if (!role || !userRole) throw new NotFoundException('Role does not exist');
         const user = await createdUser.save();
         const createRoleMappingDto = new CreateRoleMappingDto(user._id, role._id);
         const createdRoleMapping = new this.roleMappingModel(createRoleMappingDto);
         const roleMapping = await createdRoleMapping.save();
         const { password, ...rest } = user.toJSON();
-        return rest;
+        if (role.name === 'user')
+            return rest;
     }
 
     async login(loginUserDto: LoginUserDto, roles?: string[]): Promise<string> {
