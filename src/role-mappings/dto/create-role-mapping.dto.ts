@@ -1,4 +1,4 @@
-import { IsMongoId } from 'class-validator';
+import { IsMongoId, IsEmpty } from 'class-validator';
 
 export class CreateRoleMappingDto {
     @IsMongoId()
@@ -6,6 +6,12 @@ export class CreateRoleMappingDto {
 
     @IsMongoId()
     readonly roleId: string;
+
+    @IsEmpty()
+    readonly created: Date;
+
+    @IsEmpty()
+    readonly modified: Date;
 
     constructor(userId: string, roleId: string) {
         this.userId = userId;
