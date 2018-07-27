@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Delete, Body, Param, HttpCode, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Delete, Body, Param, HttpCode, UseGuards, Req } from '@nestjs/common';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { ArticlesService } from './articles.service';
 import { Article } from './interfaces/article.interface';
@@ -35,8 +35,8 @@ export class ArticlesController {
   @Roles('user')
   @UseGuards(RolesGuard)
   @Post(':id/comments')
-  addComment(@Body() createCommentDto: CreateCommentDto, @Param('id') id: string): Promise<Comment> {
-    return this.commentsService.create(createCommentDto, id);
+  addComment(@Body() createCommentDto: CreateCommentDto, @Param('id') id: string, @Req() req): Promise<Comment> {
+    return this.commentsService.create(createCommentDto, req, id);
   }
 
   @Roles('admin')
