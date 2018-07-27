@@ -4,16 +4,17 @@ import { Model } from 'mongoose';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { Comment } from './interfaces/comment.interface';
 import * as jwt from 'jsonwebtoken';
+import { FindCommentsDto } from './dto/find-comment.dto';
 
 @Injectable()
 export class CommentsService {
   constructor(@InjectModel('Comment') private readonly commentModel: Model<Comment>) { }
 
-  async create(createCommentDto: CreateCommentDto, req, article?: string): Promise<Comment> {
+  async create(createCommentDto: CreateCommentDto, req, articleId?: string): Promise<Comment> {
     const token = req.headers.authorization.split(' ')[1];
     const user = jwt.decode(token);
     const comment = new CreateCommentDto(
-      article || createCommentDto.article,
+      articleId || createCommentDto.articleId,
       createCommentDto.text,
       user._id,
     );
@@ -22,7 +23,11 @@ export class CommentsService {
     return await createdComment.save();
   }
 
-  async findAll(): Promise<Comment[]> {
-    return await this.commentModel.find().exec();
+  async findAll(findCommentDto: FindCommentsDto): Promise<Comment[]> {
+    return await this.commentModel.find(findCommentDto).exec();
+  }
+
+  async deleteById(id: string): Promise<void> {
+    await this.commentModel.findByIdAndDelete(id).exec();
   }
 }
