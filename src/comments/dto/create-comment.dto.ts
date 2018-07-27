@@ -1,22 +1,19 @@
 export class CreateCommentDto {
-    readonly article: string;
-    readonly text: string;
-    readonly user: string;
-    readonly date: Date;
+  readonly article: string;
+  readonly text: string;
+  readonly userId: string;
 
-    constructor(article: string, text: string, user: string, date: Date) {
-        this.article = article;
-        this.text = text;
-        this.user = user;
-        this.date = date;
-    }
+  constructor(article: string, text: string, userId: string) {
+    this.article = article;
+    this.text = text;
+    this.userId = userId;
+  }
 
-    setArticle(article: string) {
-        return new CreateCommentDto(
-            article,
-            this.text,
-            this.user,
-            this.date,
-        );
-    }
+  setArticle(article: string) {
+    return new CreateCommentDto(
+      article,
+      this.text,
+      this.userId,
+    );
+  }
 }
