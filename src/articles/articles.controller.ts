@@ -7,6 +7,7 @@ import { CreateCommentDto } from '../comments/dto/create-comment.dto';
 import { Comment } from '../comments/interfaces/comment.interface';
 import { Roles } from '../decorators/roles.decorator';
 import { RolesGuard } from '../guards/roles.guard';
+import { FindCommentsDto } from 'comments/dto/find-comment.dto';
 
 @Controller('articles')
 export class ArticlesController {
@@ -23,6 +24,11 @@ export class ArticlesController {
   @Get(':id')
   findById(@Param('id') id: string): Promise<Article> {
     return this.articlesService.findById(id);
+  }
+
+  @Get(':articleId/comments')
+  findComments(@Param() findCommentDto: FindCommentsDto): Promise<Comment[]> {
+    return this.commentsService.findAll(findCommentDto);
   }
 
   @Roles('user')
