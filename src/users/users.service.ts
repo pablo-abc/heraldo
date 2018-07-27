@@ -39,8 +39,7 @@ export class UsersService {
     const createdRoleMapping = new this.roleMappingModel(createRoleMappingDto);
     const roleMapping = await createdRoleMapping.save();
     const { password, ...rest } = user.toJSON();
-    if (role.name === 'user')
-      return rest;
+    return rest;
   }
 
   async login(loginUserDto: LoginUserDto, roles?: string[]): Promise<ResponseToken> {
