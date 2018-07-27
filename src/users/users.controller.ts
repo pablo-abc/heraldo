@@ -7,6 +7,7 @@ import { RoleMappingsService } from '../role-mappings/role-mappings.service';
 import { RoleMapping } from '../role-mappings/interfaces/role-mapping.interface';
 import { AuthService } from 'auth/auth.service';
 import { Validator } from 'class-validator';
+import { ResponseToken } from '../auth/interfaces/response-token.interface';
 import { CreateRoleMappingDto } from 'role-mappings/dto/create-role-mapping.dto';
 import { Roles } from '../decorators/roles.decorator';
 import { RolesGuard } from '../guards/roles.guard';
@@ -31,7 +32,7 @@ export class UsersController {
 
   @Post('login')
   @HttpCode(200)
-  login(@Body() createUserDto: CreateUserDto): Promise<string> {
+  login(@Body() createUserDto: CreateUserDto): Promise<ResponseToken> {
     return this.usersService.login(createUserDto);
   }
 
