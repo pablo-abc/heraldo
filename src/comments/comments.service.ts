@@ -10,10 +10,15 @@ export class CommentsService {
   constructor(@InjectModel('Comment') private readonly commentModel: Model<Comment>) { }
 
   async create(createCommentDto: CreateCommentDto, req, article?: string): Promise<Comment> {
-
-    const createdComment = article ?
-      new this.commentModel(createCommentDto.setArticle(article)) :
-      new this.commentModel(createCommentDto);
+    const token = req.headers.authorization.split(' ')[1];
+    const user = jwt.decode(token);
+    const comment = new CreateCommentDto(
+      article || createCommentDto.article,
+      createCommentDto.text,
+      user._id,
+    );
+    const createdComment = new this.commentModel(comment);
+    createdComment.userId = user._id;
     return await createdComment.save();
   }
 
