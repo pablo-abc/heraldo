@@ -1,29 +1,29 @@
-import { IsString, IsEmail, IsEmpty, IsOptional } from 'class-validator';
+import { IsString, IsEmail, IsEmpty, IsOptional, IsArray } from 'class-validator';
 
 export class CreateUserDto {
-    @IsString()
-    readonly username: string;
+  @IsString()
+  readonly username: string;
 
-    @IsString()
-    readonly password: string;
+  @IsString()
+  readonly password: string;
 
-    @IsEmail()
-    readonly email: string;
+  @IsEmail()
+  readonly email: string;
 
-    @IsOptional()
-    @IsString()
-    readonly role?: string;
+  @IsOptional()
+  @IsArray()
+  readonly roles?: string[];
 
-    @IsEmpty()
-    readonly created: Date;
+  @IsEmpty()
+  readonly created: Date;
 
-    @IsEmpty()
-    readonly modified: Date;
+  @IsEmpty()
+  readonly modified: Date;
 
-    constructor(username: string, password: string, email: string, role?: string) {
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        if (role) this.role = role;
-    }
+  constructor(username: string, password: string, email: string, roles?: string[]) {
+    this.username = username;
+    this.password = password;
+    this.email = email;
+    if (roles) this.roles = roles;
+  }
 }
