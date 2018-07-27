@@ -13,7 +13,7 @@ export class ArticlesService {
     const token = req.headers.authorization.split(' ')[1];
     const user = jwt.decode(token);
     const createdArticle = new this.articleModel(createArticleDto);
-    createdArticle.author = user._id;
+    createdArticle.userId = user._id;
     return await createdArticle.save();
   }
 
