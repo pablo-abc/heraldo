@@ -1,19 +1,24 @@
+import { IsString, IsEmpty, IsMongoId } from 'class-validator';
+
 export class CreateCommentDto {
-  readonly article: string;
+  @IsMongoId()
+  readonly articleId: string;
+
+  @IsString()
   readonly text: string;
+
+  @IsMongoId()
   readonly userId: string;
 
-  constructor(article: string, text: string, userId: string) {
-    this.article = article;
+  @IsEmpty()
+  readonly created: string;
+
+  @IsEmpty()
+  readonly modified: string;
+
+  constructor(articleId: string, text: string, userId: string) {
+    this.articleId = articleId;
     this.text = text;
     this.userId = userId;
-  }
-
-  setArticle(article: string) {
-    return new CreateCommentDto(
-      article,
-      this.text,
-      this.userId,
-    );
   }
 }

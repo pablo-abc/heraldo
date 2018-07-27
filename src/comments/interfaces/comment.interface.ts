@@ -1,6 +1,5 @@
 export interface Comment {
-    readonly article: string;
-    readonly text: string;
-    readonly user: string;
-    readonly date: Date;
+  readonly articleId: string;
+  readonly text: string;
+  readonly userId: string;
 }

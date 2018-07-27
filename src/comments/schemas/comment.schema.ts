@@ -2,7 +2,7 @@ import * as mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 export const CommentSchema = new Schema({
-  article: {
+  articleId: {
     type: Schema.Types.ObjectId,
     ref: 'Article',
   },
