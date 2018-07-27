@@ -1,4 +1,4 @@
-import { Controller, Post, UsePipes, Body, Param, HttpCode, Req, ForbiddenException, ValidationPipe } from '@nestjs/common';
+import { Controller, Post, UsePipes, Body, Param, HttpCode, Req, ForbiddenException, ValidationPipe, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { HashPasswordPipe } from '../pipes/hash-password.pipe';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -8,6 +8,8 @@ import { RoleMapping } from '../role-mappings/interfaces/role-mapping.interface'
 import { AuthService } from 'auth/auth.service';
 import { Validator } from 'class-validator';
 import { CreateRoleMappingDto } from 'role-mappings/dto/create-role-mapping.dto';
+import { Roles } from '../decorators/roles.decorator';
+import { RolesGuard } from '../guards/roles.guard';
 const validator = new Validator();
 
 @Controller('users')
@@ -34,6 +36,8 @@ export class UsersController {
     }
 
     @Post(':userId/roles/:roleId')
+    @Roles('admin')
+    @UseGuards(RolesGuard)
     @UsePipes(new ValidationPipe({ transform: true }))
     assignRole(@Param() createRoleMappingDto: CreateRoleMappingDto): Promise<RoleMapping> {
         return this.roleMappingsService.create(createRoleMappingDto);
