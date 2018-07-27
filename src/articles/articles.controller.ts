@@ -10,38 +10,38 @@ import { RolesGuard } from '../guards/roles.guard';
 
 @Controller('articles')
 export class ArticlesController {
-    constructor(
-        private readonly articlesService: ArticlesService,
-        private readonly commentsService: CommentsService,
-    ) { }
+  constructor(
+    private readonly articlesService: ArticlesService,
+    private readonly commentsService: CommentsService,
+  ) { }
 
-    @Get()
-    findAll(): Promise<Article[]> {
-        return this.articlesService.findAll();
-    }
+  @Get()
+  findAll(): Promise<Article[]> {
+    return this.articlesService.findAll();
+  }
 
-    @Get(':id')
-    findById(@Param('id') id: string): Promise<Article> {
-        return this.articlesService.findById(id);
-    }
+  @Get(':id')
+  findById(@Param('id') id: string): Promise<Article> {
+    return this.articlesService.findById(id);
+  }
 
-    @Roles('admin', 'user')
-    @UseGuards(RolesGuard)
-    @Post()
-    create(@Body() createArticleDto: CreateArticleDto): Promise<Article> {
-        return this.articlesService.create(createArticleDto);
-    }
+  @Roles('user')
+  @UseGuards(RolesGuard)
+  @Post()
+  create(@Body() createArticleDto: CreateArticleDto): Promise<Article> {
+    return this.articlesService.create(createArticleDto);
+  }
 
-    @Post(':id/comments')
-    addComment(@Body() createCommentDto: CreateCommentDto, @Param('id') id: string): Promise<Comment> {
-        return this.commentsService.create(createCommentDto, id);
-    }
+  @Post(':id/comments')
+  addComment(@Body() createCommentDto: CreateCommentDto, @Param('id') id: string): Promise<Comment> {
+    return this.commentsService.create(createCommentDto, id);
+  }
 
-    @Roles('admin')
-    @UseGuards(RolesGuard)
-    @Delete(':id')
-    @HttpCode(204)
-    deleteById(@Param('id') id: string) {
-        this.articlesService.deleteById(id);
-    }
+  @Roles('admin')
+  @UseGuards(RolesGuard)
+  @Delete(':id')
+  @HttpCode(204)
+  deleteById(@Param('id') id: string) {
+    this.articlesService.deleteById(id);
+  }
 }
