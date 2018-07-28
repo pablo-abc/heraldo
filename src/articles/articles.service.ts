@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { CreateArticleDto } from './dto/create-article.dto';
 import * as jwt from 'jsonwebtoken';
+import { PatchArticleDto } from './dto/patch-article.dto';
 
 @Injectable()
 export class ArticlesService {
@@ -23,6 +24,10 @@ export class ArticlesService {
 
   async findById(id: string): Promise<Article> {
     return await this.articleModel.findById(id).exec();
+  }
+
+  async patchById(_id: string, patchArticleDto: PatchArticleDto): Promise<Article> {
+    return await this.articleModel.findOneAndUpdate({ _id }, { $set: patchArticleDto }).exec();
   }
 
   async deleteById(id: string) {

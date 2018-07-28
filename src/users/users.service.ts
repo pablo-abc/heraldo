@@ -43,7 +43,7 @@ export class UsersService {
       return await createdRoleMapping.save();
     });
     const { password, ...rest } = user.toJSON();
-    rest.roles = roles;
+    rest.roles = createUserDto.roles;
     return rest;
   }
 

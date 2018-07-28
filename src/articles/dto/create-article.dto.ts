@@ -1,7 +1,17 @@
+import { IsString, IsMongoId, IsOptional, IsArray } from 'class-validator';
+
 export class CreateArticleDto {
-    readonly title: string;
-    readonly date: Date;
-    readonly text: string;
-    readonly user: string;
-    readonly comments: [string];
+  @IsString()
+  readonly title: string;
+
+  @IsString()
+  readonly text: string;
+
+  @IsMongoId()
+  readonly userId: string;
+
+  @IsOptional()
+  @IsArray()
+  @IsString()
+  readonly comments: string[];
 }

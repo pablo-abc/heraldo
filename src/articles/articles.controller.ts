@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Delete, Body, Param, HttpCode, UseGuards, Req } from '@nestjs/common';
+import { Controller, Get, Post, Delete, Body, Param, HttpCode, UseGuards, Req, Patch } from '@nestjs/common';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { ArticlesService } from './articles.service';
 import { Article } from './interfaces/article.interface';
@@ -8,6 +8,7 @@ import { Comment } from '../comments/interfaces/comment.interface';
 import { Roles } from '../decorators/roles.decorator';
 import { RolesGuard } from '../guards/roles.guard';
 import { FindCommentsDto } from 'comments/dto/find-comment.dto';
+import { PatchArticleDto } from './dto/patch-article.dto';
 
 @Controller('articles')
 export class ArticlesController {
@@ -29,6 +30,13 @@ export class ArticlesController {
   @Get(':articleId/comments')
   findComments(@Param() findCommentDto: FindCommentsDto): Promise<Comment[]> {
     return this.commentsService.findAll(findCommentDto);
+  }
+
+  @Roles('user')
+  @UseGuards(RolesGuard)
+  @Patch(':id')
+  patch(@Body() patchArticleDto: PatchArticleDto, @Param('id') id: string): Promise<Article> {
+    return this.articlesService.patchById(id, patchArticleDto);
   }
 
   @Roles('user')
