@@ -27,7 +27,7 @@ export class ArticlesService {
   }
 
   async patchById(_id: string, patchArticleDto: PatchArticleDto): Promise<Article> {
-    return await this.articleModel.findOneAndUpdate({ _id }, { $set: patchArticleDto }).exec();
+    return await this.articleModel.findOneAndUpdate({ _id }, { $set: patchArticleDto }, { new: true }).exec();
   }
 
   async deleteById(id: string) {
