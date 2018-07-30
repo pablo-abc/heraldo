@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Delete, Body, Param, HttpCode, UseGuards, Req, Patch } from '@nestjs/common';
+import { Controller, Get, Post, Delete, Body, Query, Param, HttpCode, UseGuards, Req, Patch, NotFoundException } from '@nestjs/common';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { ArticlesService } from './articles.service';
 import { Article } from './interfaces/article.interface';
@@ -9,6 +9,9 @@ import { Roles } from '../decorators/roles.decorator';
 import { RolesGuard } from '../guards/roles.guard';
 import { FindCommentsDto } from 'comments/dto/find-comment.dto';
 import { PatchArticleDto } from './dto/patch-article.dto';
+import { FindArticleDto } from './dto/find-article.dto';
+import { Validator } from 'class-validator';
+const validator = new Validator();
 
 @Controller('articles')
 export class ArticlesController {
@@ -18,12 +21,14 @@ export class ArticlesController {
   ) { }
 
   @Get()
-  findAll(): Promise<Article[]> {
-    return this.articlesService.findAll();
+  findAll(@Query() query: FindArticleDto): Promise<Article[]> {
+    const { limit, ...rest } = query;
+    return this.articlesService.findAll(rest, limit);
   }
 
   @Get(':id')
   findById(@Param('id') id: string): Promise<Article> {
+    if (!validator.isMongoId(id)) throw new NotFoundException('Article does not exist');
     return this.articlesService.findById(id);
   }
 

@@ -5,6 +5,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { CreateArticleDto } from './dto/create-article.dto';
 import * as jwt from 'jsonwebtoken';
 import { PatchArticleDto } from './dto/patch-article.dto';
+import { FindArticleDto } from './dto/find-article.dto';
 
 @Injectable()
 export class ArticlesService {
@@ -18,8 +19,8 @@ export class ArticlesService {
     return await createdArticle.save();
   }
 
-  async findAll(): Promise<Article[]> {
-    return await this.articleModel.find().exec();
+  async findAll(findArticleDto: FindArticleDto, limit?: number): Promise<Article[]> {
+    return await this.articleModel.find().limit(Number(limit)).sort('-created').exec();
   }
 
   async findById(id: string): Promise<Article> {

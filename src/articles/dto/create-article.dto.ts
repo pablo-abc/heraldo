@@ -7,6 +7,9 @@ export class CreateArticleDto {
   @IsString()
   readonly text: string;
 
+  @IsString()
+  readonly image: string;
+
   @IsMongoId()
   readonly userId: string;
 

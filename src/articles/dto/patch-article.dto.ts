@@ -11,6 +11,10 @@ export class PatchArticleDto {
 
   @IsOptional()
   @IsString()
+  readonly image?: string;
+
+  @IsOptional()
+  @IsString()
   readonly text?: string;
 
   @IsOptional()

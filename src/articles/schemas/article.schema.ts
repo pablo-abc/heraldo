@@ -8,6 +8,7 @@ export const ArticleSchema = new Schema({
     ref: 'User',
   },
   text: String,
+  image: String,
   comments: [
     { type: Schema.Types.ObjectId, ref: 'Comment' },
   ],
