@@ -1,4 +1,4 @@
-import { IsString, IsOptional, IsNumber, IsMongoId } from 'class-validator';
+import { IsString, IsOptional, IsNumber, IsMongoId, IsBoolean } from 'class-validator';
 
 export class FindArticleDto {
   @IsOptional()
@@ -8,6 +8,10 @@ export class FindArticleDto {
   @IsOptional()
   @IsString()
   readonly title?: string;
+
+  @IsOptional()
+  @IsBoolean()
+  readonly approved?: boolean;
 
   @IsOptional()
   @IsNumber()

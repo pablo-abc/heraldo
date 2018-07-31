@@ -23,7 +23,7 @@ export class CommentsService {
     return await createdComment.save();
   }
 
-  async findAll(findCommentDto: FindCommentsDto): Promise<Comment[]> {
+  async findAll(findCommentDto?: FindCommentsDto): Promise<Comment[]> {
     return await this.commentModel.find(findCommentDto).exec();
   }
 
