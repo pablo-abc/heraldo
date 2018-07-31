@@ -12,9 +12,4 @@ export class CreateArticleDto {
 
   @IsMongoId()
   readonly userId: string;
-
-  @IsOptional()
-  @IsArray()
-  @IsString()
-  readonly comments: string[];
 }

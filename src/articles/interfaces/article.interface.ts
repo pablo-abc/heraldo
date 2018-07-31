@@ -3,5 +3,6 @@ export interface Article {
   readonly text: string;
   readonly image: string;
   readonly userId: string;
-  readonly comments: [string];
+  readonly comments: string[];
+  readonly votes: number;
 }

@@ -9,9 +9,14 @@ export const ArticleSchema = new Schema({
   },
   text: String,
   image: String,
-  comments: [
-    { type: Schema.Types.ObjectId, ref: 'Comment' },
-  ],
+  votes: {
+    type: Number,
+    default: 0,
+  },
+  approved: {
+    type: Boolean,
+    default: false,
+  },
   created: {
     type: Date,
     default: Date.now,

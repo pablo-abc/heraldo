@@ -23,12 +23,12 @@ export class ArticlesService {
     return await this.articleModel.find().limit(Number(limit)).sort('-created').exec();
   }
 
-  async findById(id: string): Promise<Article> {
-    return await this.articleModel.findById(id).exec();
+  async findById(findArticleDto: FindArticleDto): Promise<Article> {
+    return await this.articleModel.findById(findArticleDto._id).exec();
   }
 
-  async patchById(_id: string, patchArticleDto: PatchArticleDto): Promise<Article> {
-    return await this.articleModel.findOneAndUpdate({ _id }, { $set: patchArticleDto }, { new: true }).exec();
+  async patchById(findArticleDto: FindArticleDto, patchArticleDto: PatchArticleDto): Promise<Article> {
+    return await this.articleModel.findOneAndUpdate(findArticleDto, { $set: patchArticleDto }, { new: true }).exec();
   }
 
   async deleteById(id: string) {

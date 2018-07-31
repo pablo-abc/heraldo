@@ -61,21 +61,19 @@ export class UsersService {
     const parsedRoles = userRoles.map(role => {
       return role.roleId.name;
     });
-    const createdAccessToken = new this.accessTokenModel({
-      userId: user._id,
-      jwtid: uuidv4(),
-    });
-    const accessToken = await createdAccessToken.save();
     const token = jwt.sign({
       _id: user._id,
       username: user.username,
-      jwtid: accessToken.jwtid,
       roles: parsedRoles,
     }, process.env.SECRET, { expiresIn: 3600 });
+    const refreshToken = jwt.sign({
+      _id: user._id,
+    }, process.env.SECRET, { expiresIn: 10800 });
     const responseToken = {
       access_token: token,
       expires_in: 3600,
       token_type: 'Bearer',
+      refresh_token: refreshToken,
     };
     return responseToken;
   }
