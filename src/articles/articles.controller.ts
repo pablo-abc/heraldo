@@ -93,7 +93,7 @@ export class ArticlesController {
   @UseGuards(RolesGuard)
   @UsePipes(new ValidationPipe())
   @Post(':_id/votes')
-  addVote(@Body() createVoteDto: CreateVoteDto, @Param() findArticleDto: FindArticleDto, @Req() req): Promise<Vote> {
+  async addVote(@Body() createVoteDto: CreateVoteDto, @Param() findArticleDto: FindArticleDto, @Req() req): Promise<Vote> {
     const token = req.headers.authorization.split(' ')[1];
     const user = jwt.decode(token);
     const createdVote = new CreateVoteDto(
@@ -101,6 +101,10 @@ export class ArticlesController {
       findArticleDto._id,
       createVoteDto.vote,
     );
-    return this.votesService.addVote(createdVote);
+    const vote = await this.votesService.addVote(createdVote);
+    const voteCount = await this.votesService.countVotes({ articleId: findArticleDto._id });
+    console.log(voteCount);
+    this.articlesService.patchById({ _id: findArticleDto._id }, { votes: voteCount });
+    return vote;
   }
 }

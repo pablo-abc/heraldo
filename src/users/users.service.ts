@@ -65,13 +65,15 @@ export class UsersService {
       _id: user._id,
       username: user.username,
       roles: parsedRoles,
-    }, process.env.SECRET, { expiresIn: 3600 });
+    }, process.env.SECRET, { expiresIn: Number(process.env.ACCESS_TOKEN_EXP) });
     const refreshToken = jwt.sign({
       _id: user._id,
-    }, process.env.SECRET, { expiresIn: 10800 });
+      username: user.username,
+      roles: parsedRoles,
+    }, process.env.REFRESH_SECRET, { expiresIn: Number(process.env.REFRESH_TOKEN_EXP) });
     const responseToken = {
       access_token: token,
-      expires_in: 3600,
+      expires_in: Number(process.env.ACCESS_TOKEN_EXP),
       token_type: 'Bearer',
       refresh_token: refreshToken,
     };

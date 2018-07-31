@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Vote } from './interfaces/vote.interface';
 import { CreateVoteDto } from './dto/create-vote.dto';
+import { FindVoteDto } from './dto/find-vote.dto';
 
 @Injectable()
 export class VotesService {
@@ -13,12 +14,26 @@ export class VotesService {
       userId: createVoteDto.userId,
       articleId: createVoteDto.articleId,
     }).exec();
-    if (foundVote)
+    if (foundVote && foundVote.vote !== createVoteDto.vote)
       return await this.voteModel.findOneAndUpdate({
         userId: createVoteDto.userId,
         articleId: createVoteDto.articleId,
-      }, createVoteDto).exec();
+      }, createVoteDto, { new: true }).exec();
+    else if (foundVote)
+      return await this.voteModel.findByIdAndDelete(foundVote._id).exec();
     const createdVote = new this.voteModel(createVoteDto);
     return await createdVote.save();
+  }
+
+  async countVotes(findVoteDto: FindVoteDto): Promise<number> {
+    const upvotes = await this.voteModel.countDocuments({
+      articleId: findVoteDto.articleId,
+      vote: 1,
+    }).exec();
+    const downvotes = await this.voteModel.countDocuments({
+      articleId: findVoteDto.articleId,
+      vote: -1,
+    }).exec();
+    return upvotes - downvotes + Math.floor(Math.random() * Math.floor(200));
   }
 }
