@@ -2,8 +2,8 @@ import { Controller, Get, Post, Body, UseGuards, Req, Param, BadRequestException
 import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { Comment } from './interfaces/comment.interface';
-import { Roles } from 'decorators/roles.decorator';
-import { RolesGuard } from 'guards/roles.guard';
+import { Roles } from '../decorators/roles.decorator';
+import { RolesGuard } from '../guards/roles.guard';
 import { Validator } from 'class-validator';
 const validator = new Validator();
 

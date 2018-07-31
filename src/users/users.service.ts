@@ -11,7 +11,7 @@ import { LoginUserDto } from './dto/login-user.dto';
 import * as jwt from 'jsonwebtoken';
 import * as bcrypt from 'bcrypt';
 import * as uuidv4 from 'uuid/v4';
-import { ResponseToken } from 'auth/interfaces/response-token.interface';
+import { ResponseToken } from '../auth/interfaces/response-token.interface';
 
 @Injectable()
 export class UsersService {

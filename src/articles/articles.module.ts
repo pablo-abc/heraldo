@@ -4,7 +4,7 @@ import { ArticlesService } from './articles.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ArticleSchema } from './schemas/article.schema';
 import { CommentsModule } from '../comments/comments.module';
-import { VotesModule } from 'votes/votes.module';
+import { VotesModule } from '../votes/votes.module';
 
 @Module({
   imports: [

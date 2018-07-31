@@ -22,13 +22,13 @@ import { CreateCommentDto } from '../comments/dto/create-comment.dto';
 import { Comment } from '../comments/interfaces/comment.interface';
 import { Roles } from '../decorators/roles.decorator';
 import { RolesGuard } from '../guards/roles.guard';
-import { FindCommentsDto } from 'comments/dto/find-comment.dto';
+import { FindCommentsDto } from '../comments/dto/find-comment.dto';
 import { PatchArticleDto } from './dto/patch-article.dto';
 import { FindArticleDto } from './dto/find-article.dto';
 import { Validator } from 'class-validator';
-import { VotesService } from 'votes/votes.service';
-import { CreateVoteDto } from 'votes/dto/create-vote.dto';
-import { Vote } from 'votes/interfaces/vote.interface';
+import { VotesService } from '../votes/votes.service';
+import { CreateVoteDto } from '../votes/dto/create-vote.dto';
+import { Vote } from '../votes/interfaces/vote.interface';
 import * as jwt from 'jsonwebtoken';
 const validator = new Validator();
 
