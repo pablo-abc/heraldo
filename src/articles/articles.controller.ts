@@ -103,7 +103,6 @@ export class ArticlesController {
     );
     const vote = await this.votesService.addVote(createdVote);
     const voteCount = await this.votesService.countVotes({ articleId: findArticleDto._id });
-    console.log(voteCount);
     this.articlesService.patchById({ _id: findArticleDto._id }, { votes: voteCount });
     return vote;
   }
