@@ -1,4 +1,4 @@
-import { IsString, IsMongoId, IsOptional, IsArray } from 'class-validator';
+import { IsString, IsMongoId, IsOptional } from 'class-validator';
 
 export class CreateArticleDto {
   @IsString()
