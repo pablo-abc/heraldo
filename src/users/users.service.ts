@@ -68,6 +68,7 @@ export class UsersService {
     const accessToken = await createdAccessToken.save();
     const token = jwt.sign({
       _id: user._id,
+      username: user.username,
       jwtid: accessToken.jwtid,
       roles: parsedRoles,
     }, process.env.SECRET, { expiresIn: 3600 });
