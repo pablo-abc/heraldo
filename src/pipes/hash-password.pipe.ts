@@ -9,6 +9,8 @@ export class HashPasswordPipe implements PipeTransform<CreateUserDto, Promise<Cr
     return new CreateUserDto(
       user.username,
       hashedPassword,
+      user.firstName,
+      user.lastName,
       user.email,
       user.roles,
     );
