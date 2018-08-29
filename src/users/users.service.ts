@@ -12,6 +12,7 @@ import * as jwt from 'jsonwebtoken';
 import * as bcrypt from 'bcrypt';
 import * as uuidv4 from 'uuid/v4';
 import { ResponseToken } from '../auth/interfaces/response-token.interface';
+import { FindUserDto } from './dto/find-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -21,6 +22,11 @@ export class UsersService {
     @InjectModel('Role') private readonly roleModel: Model<Role>,
     @InjectModel('AccessToken') private readonly accessTokenModel: Model<AccessToken>,
   ) { }
+
+  async find(findUserDto: FindUserDto): Promise<User[]> {
+    const users = await this.userModel.find(findUserDto);
+    return users;
+  }
 
   async create(createUserDto: CreateUserDto): Promise<User> {
     const foundUser = await this.userModel.findOne({

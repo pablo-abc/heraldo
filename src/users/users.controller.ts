@@ -1,4 +1,4 @@
-import { Controller, Post, UsePipes, Body, Param, HttpCode, Req, ForbiddenException, ValidationPipe, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, UsePipes, Query, Body, Param, HttpCode, Req, ForbiddenException, ValidationPipe, UseGuards, InternalServerErrorException } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { HashPasswordPipe } from '../pipes/hash-password.pipe';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -11,6 +11,7 @@ import { ResponseToken } from '../auth/interfaces/response-token.interface';
 import { CreateRoleMappingDto } from '../role-mappings/dto/create-role-mapping.dto';
 import { Roles } from '../decorators/roles.decorator';
 import { RolesGuard } from '../guards/roles.guard';
+import { FindUserDto } from './dto/find-user.dto';
 const validator = new Validator();
 
 @Controller('users')
@@ -20,6 +21,14 @@ export class UsersController {
     private readonly roleMappingsService: RoleMappingsService,
     private readonly authService: AuthService,
   ) { }
+
+  @Get('exists')
+  exists(@Query() findUserDto: FindUserDto): Promise<boolean> {
+    return this.usersService.find(findUserDto)
+      .then(users => {
+        return users.length > 0;
+      });
+  }
 
   @Post()
   @UsePipes(new HashPasswordPipe(), new ValidationPipe({ transform: true }))
