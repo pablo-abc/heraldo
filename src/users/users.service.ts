@@ -37,9 +37,10 @@ export class UsersService {
     });
     if (foundUser) throw new ConflictException('Email or username already in use');
     const createdUser = new this.userModel(createUserDto);
-    const roleQuery = createUserDto.roles.indexOf('user') > -1 ?
+    const roleQuery = createUserDto.roles ? (createUserDto.roles.indexOf('user') > -1 ?
       createUserDto.roles.map(name => ({ name })) :
-      createUserDto.roles.map(name => ({ name })).concat({ name: 'user' });
+      createUserDto.roles.map(name => ({ name })).concat({ name: 'user' })) :
+      [{ name: 'user' }];
     const roles = await this.roleModel.find({ $or: roleQuery }).exec();
     if (roles.length < roleQuery.length) throw new NotFoundException('Role does not exist');
     const user = await createdUser.save();
