@@ -1,4 +1,4 @@
-import { Controller, Get, Post, UsePipes, Query, Body, Param, HttpCode, Req, ForbiddenException, ValidationPipe, UseGuards, InternalServerErrorException } from '@nestjs/common';
+import { Controller, Get, Post, UsePipes, Query, Body, Param, HttpCode, Req, ForbiddenException, ValidationPipe, UseGuards, InternalServerErrorException, BadRequestException } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { HashPasswordPipe } from '../pipes/hash-password.pipe';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -28,6 +28,13 @@ export class UsersController {
       .then(users => {
         return users.length > 0;
       });
+  }
+
+  @Get(':_id')
+  @UsePipes(new ValidationPipe({ transform: true }))
+  findById(@Param() findUserDto: FindUserDto): Promise<User> {
+    if (!findUserDto._id) throw new BadRequestException('User ID needed');
+    return this.usersService.findById(findUserDto);
   }
 
   @Post()

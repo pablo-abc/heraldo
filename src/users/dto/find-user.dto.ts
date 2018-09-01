@@ -1,6 +1,10 @@
-import { IsString, IsEmail, IsOptional } from 'class-validator';
+import { IsString, IsEmail, IsOptional, IsMongoId } from 'class-validator';
 
 export class FindUserDto {
+  @IsOptional()
+  @IsMongoId()
+  readonly _id?: string;
+
   @IsOptional()
   @IsString()
   readonly username?: string;

@@ -28,6 +28,10 @@ export class UsersService {
     return users;
   }
 
+  async findById(findUserDto: FindUserDto): Promise<User> {
+    return await this.userModel.findById(findUserDto._id).exec();
+  }
+
   async create(createUserDto: CreateUserDto): Promise<User> {
     const foundUser = await this.userModel.findOne({
       $or: [
