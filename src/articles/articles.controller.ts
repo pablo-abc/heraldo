@@ -42,8 +42,8 @@ export class ArticlesController {
 
   @Get()
   findAll(@Query() query: FindArticleDto): Promise<Article[]> {
-    const { limit, ...rest } = query;
-    return this.articlesService.findAll(rest, limit);
+    const { limit, skip, ...rest } = query;
+    return this.articlesService.findAll(rest, limit, skip);
   }
 
   @Get(':_id')

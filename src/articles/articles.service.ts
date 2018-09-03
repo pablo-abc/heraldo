@@ -19,8 +19,8 @@ export class ArticlesService {
     return await createdArticle.save();
   }
 
-  async findAll(findArticleDto: FindArticleDto, limit?: number): Promise<Article[]> {
-    return await this.articleModel.find().limit(Number(limit)).sort('-created').exec();
+  async findAll(findArticleDto: FindArticleDto, limit?: number, skip?: number): Promise<Article[]> {
+    return await this.articleModel.find().limit(Number(limit)).skip(Number(skip)).sort('-created').exec();
   }
 
   async findById(findArticleDto: FindArticleDto): Promise<Article> {

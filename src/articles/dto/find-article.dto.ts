@@ -16,4 +16,8 @@ export class FindArticleDto {
   @IsOptional()
   @IsNumber()
   readonly limit?: number;
+
+  @IsOptional()
+  @IsNumber()
+  readonly skip?: number;
 }
