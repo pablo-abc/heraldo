@@ -7,7 +7,10 @@ export const ArticleSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User',
   },
-  text: String,
+  text: {
+    type: String,
+    required: true,
+  },
   image: String,
   votes: {
     type: Number,

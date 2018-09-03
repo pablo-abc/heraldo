@@ -13,6 +13,10 @@ export class CreateUserDto {
   @IsString()
   readonly lastName: string;
 
+  @IsOptional()
+  @IsString()
+  readonly description?: string;
+
   @IsEmail()
   readonly email: string;
 
@@ -26,11 +30,12 @@ export class CreateUserDto {
   @IsEmpty()
   readonly modified: Date;
 
-  constructor(username: string, password: string, firstName: string, lastName: string, email: string, roles?: string[]) {
+  constructor(username: string, password: string, firstName: string, lastName: string, description: string, email: string, roles?: string[]) {
     this.username = username;
     this.password = password;
     this.firstName = firstName;
     this.lastName = lastName;
+    this.description = description;
     this.email = email;
     if (roles) this.roles = roles;
   }
