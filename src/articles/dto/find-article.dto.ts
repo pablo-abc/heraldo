@@ -14,6 +14,10 @@ export class FindArticleDto {
   readonly approved?: boolean;
 
   @IsOptional()
+  @IsBoolean()
+  readonly published?: boolean;
+
+  @IsOptional()
   @IsNumber()
   readonly limit?: number;
 

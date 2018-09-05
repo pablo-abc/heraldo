@@ -20,6 +20,10 @@ export const ArticleSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  published: {
+    type: Boolean,
+    default: false,
+  },
   created: {
     type: Date,
     default: Date.now,

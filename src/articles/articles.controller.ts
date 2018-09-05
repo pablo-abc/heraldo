@@ -69,7 +69,9 @@ export class ArticlesController {
   @UseGuards(RolesGuard)
   @Post()
   create(@Body() createArticleDto: CreateArticleDto, @Req() req): Promise<Article> {
-    return this.articlesService.create(createArticleDto, req);
+    const token = req.headers.authorization.split(' ')[1];
+    const userId = jwt.decode(token)._id;
+    return this.articlesService.create({ ...createArticleDto, userId });
   }
 
   @Roles('user')

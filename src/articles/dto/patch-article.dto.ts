@@ -1,4 +1,4 @@
-import { IsString, IsMongoId, IsOptional, IsNumber } from 'class-validator';
+import { IsBoolean, IsString, IsMongoId, IsOptional, IsNumber } from 'class-validator';
 
 export class PatchArticleDto {
   @IsOptional()
@@ -16,6 +16,14 @@ export class PatchArticleDto {
   @IsOptional()
   @IsNumber()
   readonly votes?: number;
+
+  @IsOptional()
+  @IsBoolean()
+  readonly approved?: boolean;
+
+  @IsOptional()
+  @IsBoolean()
+  readonly published?: boolean;
 
   @IsOptional()
   @IsString()

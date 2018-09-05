@@ -1,4 +1,4 @@
-import { IsString, IsMongoId, IsOptional } from 'class-validator';
+import { IsString, IsMongoId, IsOptional, IsBoolean } from 'class-validator';
 
 export class CreateArticleDto {
   @IsString()
@@ -12,4 +12,8 @@ export class CreateArticleDto {
 
   @IsMongoId()
   readonly userId: string;
+
+  @IsOptional()
+  @IsBoolean()
+  readonly published?: boolean;
 }
