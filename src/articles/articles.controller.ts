@@ -48,8 +48,9 @@ export class ArticlesController {
 
   @Get(':_id')
   @UsePipes(new ValidationPipe())
-  findById(@Param() findArticleDto: FindArticleDto): Promise<Article> {
-    return this.articlesService.findById(findArticleDto);
+  findById(@Param() findArticleDto: FindArticleDto, @Query() query: FindArticleDto): Promise<Article> {
+    const { _id, ...rest } = query;
+    return this.articlesService.findById({ _id: findArticleDto._id, ...rest });
   }
 
   @Get(':articleId/comments')

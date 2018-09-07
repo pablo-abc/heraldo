@@ -21,7 +21,7 @@ export class ArticlesService {
   }
 
   async findById(findArticleDto: FindArticleDto): Promise<Article> {
-    return await this.articleModel.findById(findArticleDto._id).exec();
+    return await this.articleModel.findById(findArticleDto._id).populate(findArticleDto.populate || '').exec();
   }
 
   async patchById(findArticleDto: FindArticleDto, patchArticleDto: PatchArticleDto): Promise<Article> {

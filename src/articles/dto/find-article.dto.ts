@@ -24,4 +24,8 @@ export class FindArticleDto {
   @IsOptional()
   @IsNumber()
   readonly skip?: number;
+
+  @IsOptional()
+  @IsString()
+  readonly populate?: string;
 }
